@@ -1,0 +1,33 @@
+{
+    "name": "fubbleskag/seat-altcheck",
+    "description": "Alt Checker for SeAT",
+    "authors": [
+        {
+            "name": "Fubble J. Skag",
+            "email": "fubbleskag@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Fubbleskag\\Seat\\Altcheck\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.3",
+        "laravel/framework": "^6.2",
+        "eveseat/web": "^4.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "orchestra/database": "^4.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Fubbleskag\\Seat\\Altcheck\\AltcheckServiceProvider"
+            ]
+        }
+    }
+}
