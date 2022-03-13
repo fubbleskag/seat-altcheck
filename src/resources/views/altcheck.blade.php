@@ -10,10 +10,11 @@
 			<h3 class="card-title">Alts to Check</h3>
 		</div>
 		<div class="card-body">
-			<p class="card-text">List of alts to check, one per line.</p>
+			<p class="card-text">Copy/paste the list of alts to be checked.</p>
 			<textarea name="altlist" id="altlist" rows="15" style="width: 100%" onclick="this.focus();this.select()"></textarea>
-			<label for="corporations">Corporation:</label>
-			<select id="corporations" class="form-control">
+			<input type="hidden" id="corporations" value="{{ $my_corporation_id }}">
+			{{-- <label for="corporations">Corporation:</label>
+			<select id="corporations" class="form-control" readonly="readonly">
 				@foreach ($corps as $corp)
 					@if ( $corp->corporation_id == $my_corporation_id )
 						<option value="{{ $corp->corporation_id }}" selected>{{ $corp->name }}</option>
@@ -21,7 +22,7 @@
 						<option value="{{ $corp->corporation_id }}">{{ $corp->name }}</option>
 					@endif
 				@endforeach
-			</select>
+			</select> --}}
 		</div>
 		<div class="card-footer">
 			<button type="button" id="checkalts" class="btn btn-info btn-flat">
@@ -94,8 +95,7 @@
 			report.find("thead").append("<tr><th>&nbsp;</th><th>Character</th><th>Main</th>");
 			body = '';
 			$.each( result, function( character, details ) {
-				console.log( details );
-				if ( details.mainCorpId == 98377551 ) { // known and in-corp
+				if ( details.mainCorpId == $('#corporations').val() ) { // known and in-corp
 					icon = '<span class="text-success"><i class="fas fa-check-circle" data-toggle="tooltip" title="" data-original-title=""></i></span>';
 				} else if ( details.mainCorpId == undefined ) { // unknown
 					icon = '<span class="text-warning"><i class="fas fa-question-circle" data-toggle="tooltip" title="" data-original-title=""></i></span>';
@@ -105,7 +105,7 @@
 				if ( details.main == undefined ) {
 					main = "N/A";
 				} else {
-					main = details.main;
+					main = '<a href="/characters/' + details.mainCharacterId + '/sheet"><img src="//images.evetech.net/characters/' + details.mainCharacterId + '/portrait?size=64" data-src="//images.evetech.net/characters/' + details.mainCharacterId + '/portrait?size=64" data-src-retina="//images.evetech.net/characters/' + details.mainCharacterId + '/portrait?size=128" class="img-circle eve-icon small-icon img-lazy-load"> ' + details.main + '</a>';
 				}
 				body += '<tr><td>' + icon + '</td><td>' + character + '</td><td>' + main + '</td></tr>';
 			} );
