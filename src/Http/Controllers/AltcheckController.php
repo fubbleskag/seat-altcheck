@@ -27,8 +27,9 @@ class AltcheckController extends Controller
 
 	public function getAltcheckReport(Request $request)
 	{
-		$altsin = explode( "\n", $request->input('altlist') ); // make an array of the names submitted
-		$sqlin = '"' . str_replace( "\n", '","', $request->input('altlist') ) . '"'; // make an SQL IN formatted list of the names submitted (TODO: find a way to do this using DB)
+		$altlist = preg_replace( '/\s{2,}/m', "\n", $request->input( 'altlist' ) ); // convert mulit-spaces to new-lines (ACL copy/paste compat)
+		$altsin = explode( "\n", $altlist ); // make an array of the names submitted
+		$sqlin = '"' . implode( '","', $altsin ) . '"'; // make an SQL IN formatted list of the names submitted (TODO: find a way to do this using DB)
 		$results = []; // results of the DB search indexed by name submitted
 		$return = []; // merged results to send to the browser
 
